@@ -1,4 +1,6 @@
-module.exports = (req, res) => {
-  const { name = 'World' } = req.query
-  res.status(200).send(`Hello ${name}!`)
+exports.handler = function(event, context, callback) {
+    callback(null, {
+    statusCode: 200,
+    body: "Hello, World"
+    });
 }
