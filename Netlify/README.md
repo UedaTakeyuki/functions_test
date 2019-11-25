@@ -7,6 +7,8 @@ Test of netlify function feature
 2. [Deploys] - [Build settings] - [Edit settings], set ``Base directory``  as ```Netlify```, conirm the ``Publish directory`` is automatically changed also as ```/Netlify```
 <img src="https://i.imgur.com/5WUHdkO.png">
 2. [Settings] - [Functions] - [Settings], set Functions directory as ``` ./api ```
+
 3. [Trigger deploy]
+
 4. get [site url]/.netlify/functions/hello
 
