@@ -14,3 +14,11 @@ Test of netlify function feature
 
 5. get [site url]/.netlify/functions/hello
 
+## Sites
+
+### functions
+- [hello](https://functionstest.netlify.com/.netlify/functions/hello)
+
+### Usage
+- [Overview](https://app.netlify.com/sites/functionstest/settings/functions)
+
