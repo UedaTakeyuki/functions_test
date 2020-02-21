@@ -17,7 +17,9 @@ let fireStore = admin.firestore();
 
 // Hashid
 const Hashids = require('hashids/cjs')
-const hashids = new Hashids()
+let hashids = new Hashids("For Internal ID of",
+                          8,
+                          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 // Take the text parameter passed to this HTTP endpoint and insert it into the
 // Realtime Database under the path /messages/:pushId/original
@@ -57,10 +59,12 @@ exports.newID = functions.https.onRequest(async (req, res) => {
 exports.createID = functions.firestore.document('users/{userId}').onCreate(async (snap, context) => {
   // ... Your code here
   const newValue = snap.data();
+  console.log(newValue)
   let citiesRef = fireStore.collection('system').doc('uid_counter');
   let snapshot = await citiesRef.get();
   let counter = snapshot.get('counter');
   let id = hashids.encode(counter++);
+  console.log(id)
   snap.ref.update({id: id});
   snapshot.ref.update({counter: counter}); 
 });
