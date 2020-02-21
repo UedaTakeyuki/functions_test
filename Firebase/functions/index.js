@@ -15,6 +15,10 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 let fireStore = admin.firestore();
 
+// Hashid
+const Hashids = require('hashids/cjs')
+const hashids = new Hashids()
+
 // Take the text parameter passed to this HTTP endpoint and insert it into the
 // Realtime Database under the path /messages/:pushId/original
 exports.addMessage = functions.https.onRequest(async (req, res) => {
@@ -45,12 +49,18 @@ exports.newID = functions.https.onRequest(async (req, res) => {
   let snapshot = await citiesRef.get();
   let counter = snapshot.get('counter');
   console.log('current counter = ', counter);
-  res.status(200).send(counter);
+  res.status(200).send({ counter: counter});
+  snapshot.ref.update({counter: coounter})
 //  res.send('aho');
 });
 
-exports.createID = functions.firestore.document('users/{userId}').onCreate((snap, context) => {
+exports.createID = functions.firestore.document('users/{userId}').onCreate(async (snap, context) => {
   // ... Your code here
   const newValue = snap.data();
-  snap.ref.update({id: "ahoaho"})
+  let citiesRef = fireStore.collection('system').doc('uid_counter');
+  let snapshot = await citiesRef.get();
+  let counter = snapshot.get('counter');
+  let id = hashids.encode(counter++);
+  snap.ref.update({id: id});
+  snapshot.ref.update({counter: counter}); 
 });
